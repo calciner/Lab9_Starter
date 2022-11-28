@@ -99,7 +99,7 @@
 
   <script>
     window.onerror = (event)=>{
-      let errorString = `${log.textContent}${event.type}: ${event.message}\n`;
+      let errorString = `${event.type}: ${event.message}\n`;
       TrackJS.track(errorString);
     };
 
