@@ -88,6 +88,19 @@
   </main>
 
   <script>
+
+
+    function isNumeric(value) {
+        return /^\d+$/.test(value);
+    }
+
+  class ValidationError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = "NotNumberError";
+    }
+}
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -95,10 +108,117 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      /*
+      try {
+        if(isNumeric(firstNum) == false){
+          throw new SyntaxError("input is not a number");
+        }
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
+      } catch (err) {
+        alert(err.message);
+        console.trace(err.trace);
+      } finally {
+        console.log("output finish");
+      } 
+
+*/
+      
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
+    index = 0;
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.log(output);
+    });
+    index++;
+    
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.error(output);
+    });
+    index++;
+    
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.count(output);
+    });
+    index++;
+    
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.warn(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.assert(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.clear(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.dir(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.dirxml(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.group(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.groupEnd(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.table(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.time(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.timeEnd(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.trace(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.log(output);
+    });
+
+
+
 
     // Start your code here
     // You may move this JS to another file if you wish
