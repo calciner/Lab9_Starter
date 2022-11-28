@@ -5,6 +5,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "13b34d7933a5413d85b4ad909956f2fc"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
+
+
   <title>Lab 9</title>
 
   <style>
@@ -88,18 +98,23 @@
   </main>
 
   <script>
+    window.onerror = (event)=>{
+      let errorString = `${log.textContent}${event.type}: ${event.message}\n`;
+      TrackJS.track(errorString);
+    };
 
 
     function isNumeric(value) {
         return /^\d+$/.test(value);
     }
 
-  class ValidationError extends Error {
-    constructor(message) {
-      super(message);
-      this.name = "NotNumberError";
+    class NotNumberError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "NotNumberError";
+        console.log("custom error:"+message);
+      }
     }
-}
 
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -108,13 +123,11 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      /*
+      
       try {
         if(isNumeric(firstNum) == false){
-          throw new SyntaxError("input is not a number");
+          throw new SyntaxError("first input is not a number");
         }
-        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-
       } catch (err) {
         alert(err.message);
         console.trace(err.trace);
@@ -122,7 +135,15 @@
         console.log("output finish");
       } 
 
-*/
+      try{
+        if(isNumeric(secondNum) == false){
+          throw new NotNumberError("second input is not a number");
+        }
+      } catch{
+          console.trace(err.trace);
+      }
+      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
       
     });
 
@@ -154,67 +175,82 @@
 
     errorBtns[index].addEventListener("click",(e)=>{
       let output = e.currentTarget.innerHTML + " demo";
-      console.assert(output);
+      console.assert(output != "Console Assert demo");
     });
     index++;
 
     errorBtns[index].addEventListener("click",(e)=>{
       let output = e.currentTarget.innerHTML + " demo";
-      console.clear(output);
+      console.clear();
     });
     index++;
 
     errorBtns[index].addEventListener("click",(e)=>{
       let output = e.currentTarget.innerHTML + " demo";
-      console.dir(output);
+      console.dir(e.currentTarget);
     });
     index++;
 
     errorBtns[index].addEventListener("click",(e)=>{
       let output = e.currentTarget.innerHTML + " demo";
-      console.dirxml(output);
+      console.dirxml(e.currentTarget);
     });
     index++;
 
     errorBtns[index].addEventListener("click",(e)=>{
-      let output = e.currentTarget.innerHTML + " demo";
-      console.group(output);
-    });
-    index++;
-
-    errorBtns[index].addEventListener("click",(e)=>{
-      let output = e.currentTarget.innerHTML + " demo";
-      console.groupEnd(output);
-    });
-    index++;
-
-    errorBtns[index].addEventListener("click",(e)=>{
-      let output = e.currentTarget.innerHTML + " demo";
-      console.table(output);
-    });
-    index++;
-
-    errorBtns[index].addEventListener("click",(e)=>{
-      let output = e.currentTarget.innerHTML + " demo";
-      console.time(output);
-    });
-    index++;
-
-    errorBtns[index].addEventListener("click",(e)=>{
-      let output = e.currentTarget.innerHTML + " demo";
-      console.timeEnd(output);
-    });
-    index++;
-
-    errorBtns[index].addEventListener("click",(e)=>{
-      let output = e.currentTarget.innerHTML + " demo";
-      console.trace(output);
-    });
-    index++;
-
-    errorBtns[index].addEventListener("click",(e)=>{
-      let output = e.currentTarget.innerHTML + " demo";
+      let output = e.currentTarget.innerHTML;
+      console.group();
       console.log(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML;
+      console.groupEnd();
+      console.log(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      console.table(output.split(' '));
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML;
+      console.time();
+      console.log(output);
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML;
+      console.timeEnd();
+      console.log(output);
+    });
+    index++;
+
+    function level1(){
+        function level2(){
+          console.trace("trace");
+        }
+        level2();
+    }
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      level1();
+
+    });
+    index++;
+
+    errorBtns[index].addEventListener("click",(e)=>{
+      let output = e.currentTarget.innerHTML + " demo";
+      try {
+        aintGonnaWork();
+      } catch (err) {
+        console.log(err.message)
+      }
     });
 
 
